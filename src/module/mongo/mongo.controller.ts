@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
 import { Connection, ConnectionStates } from 'mongoose';
-import { State_Enum } from '../enum/index.enum';
+import { State_Enum } from '../../enum/index.enum';
 
 @Controller('mongo')
 export class MongoController {
@@ -11,10 +11,6 @@ export class MongoController {
     const readyState = this.connection.readyState; // 0 = disconnected, 1 = connected...
     const stateLabel = State_Enum.Connected ?? State_Enum.Unknown;
 
-    console.log(
-      'process.env.MONGODB_CONNECTION_STRING',
-      process.env.MONGODB_CONNECTION_STRING,
-    );
     // If not connected, return quickly
     if (readyState !== ConnectionStates.connected) {
       return {
