@@ -11,7 +11,7 @@ export type AnswerDocument = HydratedDocument<Answer>;
 export class Answer {
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: Survey.name,
+    ref: 'Survey',
     required: true,
     index: true,
   })
@@ -19,7 +19,7 @@ export class Answer {
 
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: Question.name,
+    ref: 'Question',
     required: true,
     index: true,
   })

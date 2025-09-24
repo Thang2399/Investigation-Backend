@@ -1,15 +1,15 @@
 import { HydratedDocument, Schema as MongooseSchema, Types } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Survey } from './survey.schema';
-import { Response_Enum } from '../../enum/index.enum';
+import { Response_Enum } from '../enum/index.enum';
 import { User } from './user.schema';
 import { Question } from './question.schema';
 
 export type ResponseSessionDocument = HydratedDocument<ResponseSession>;
 
-@Schema({ timestamps: true})
+@Schema({ timestamps: true })
 export class ResponseSession {
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Survey.name })
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Survey' })
   surveyId?: Types.ObjectId;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: User.name })
@@ -21,7 +21,7 @@ export class ResponseSession {
   @Prop({ type: Boolean, default: true })
   isAnonymousUser: boolean;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Question.name })
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Question' })
   lastQuestionId?: Types.ObjectId;
 
   @Prop({ type: Number, default: 0 })
@@ -34,4 +34,5 @@ export class ResponseSession {
   submittedAt?: Date;
 }
 
-export const ResponseSessionSchema = SchemaFactory.createForClass(ResponseSession);
+export const ResponseSessionSchema =
+  SchemaFactory.createForClass(ResponseSession);
