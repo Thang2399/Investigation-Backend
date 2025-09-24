@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { LayoutTypeEnum } from '../../enum/layout.enum';
-import { QuestionTypeEnum } from '../../enum/question.enum';
+import { LayoutTypeEnum } from '../enum/layout.enum';
+import { QuestionTypeEnum } from '../enum/question.enum';
 import { Option, OptionSchema } from './option.schema';
 import { ValidationRules, ValidationRulesSchema } from './validation.schema';
 import { Survey } from './survey.schema';
@@ -10,8 +10,8 @@ export type QuestionDocument = HydratedDocument<Question>;
 
 @Schema({ timestamps: true })
 export class Question {
-  @Prop({ type: Types.ObjectId, ref: Survey.name })
-  surveyId?: Types.ObjectId;
+  @Prop({ type: [Types.ObjectId], ref: Survey.name, default: [], index: true })
+  surveyIds?: Types.ObjectId[];
 
   @Prop({ required: true })
   questionTitle: string;
@@ -26,13 +26,10 @@ export class Question {
   })
   layout: LayoutTypeEnum;
 
-  @Prop({ required: true })
-  answer: string;
-
   @Prop({ required: true, enum: QuestionTypeEnum })
   questionType: QuestionTypeEnum;
 
-  @Prop()
+  @Prop({ required: true, min: 0, max: 10 })
   numberOfOptions?: number = 0;
 
   @Prop()
@@ -42,7 +39,7 @@ export class Question {
   @Prop({ type: [OptionSchema], default: [] })
   options?: Option[];
 
-  @Prop({ type: [ValidationRulesSchema], default: {} })
+  @Prop({ type: ValidationRulesSchema, default: {} })
   validation?: ValidationRules;
 }
 
