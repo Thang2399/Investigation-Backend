@@ -9,32 +9,32 @@ export type AnswerDocument = HydratedDocument<Answer>;
 
 @Schema({ timestamps: true })
 export class Answer {
-  @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: 'Survey',
-    required: true,
-    index: true,
-  })
-  surveyId: Types.ObjectId;
+  // @Prop({
+  //   type: MongooseSchema.Types.ObjectId,
+  //   ref: 'Survey',
+  //   required: true,
+  //   index: true,
+  // })
+  // surveyId: Types.ObjectId;
 
-  @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: 'Question',
-    required: true,
-    index: true,
-  })
-  questionId: Types.ObjectId;
+  // @Prop({
+  //   type: MongooseSchema.Types.ObjectId,
+  //   ref: 'Question',
+  //   required: true,
+  //   index: true,
+  // })
+  // questionId: Types.ObjectId;
 
-  @Prop({ type: MongooseSchema.Types.ObjectId, ref: User.name, index: true })
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: User.name })
   userId?: Types.ObjectId;
 
-  @Prop({
-    type: MongooseSchema.Types.ObjectId,
-    ref: ResponseSession.name,
-    required: true,
-    index: true,
-  })
-  responseSessionId: Types.ObjectId;
+  // @Prop({
+  //   type: MongooseSchema.Types.ObjectId,
+  //   ref: ResponseSession.name,
+  //   required: true,
+  //   index: true,
+  // })
+  // responseSessionId: Types.ObjectId;
 
   @Prop({ required: true })
   valueString: string;
@@ -49,4 +49,4 @@ export class Answer {
 export const AnswerSchema = SchemaFactory.createForClass(Answer);
 
 // Prevent duplicate answers in the same session for the same question
-AnswerSchema.index({ responseSessionId: 1, questionId: 1 }, { unique: true });
+// AnswerSchema.index({ responseSessionId: 1, questionId: 1 }, { unique: true });

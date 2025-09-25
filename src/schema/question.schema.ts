@@ -10,7 +10,7 @@ export type QuestionDocument = HydratedDocument<Question>;
 
 @Schema({ timestamps: true })
 export class Question {
-  @Prop({ type: [Types.ObjectId], ref: Survey.name, default: [], index: true })
+  @Prop({ type: [Types.ObjectId], ref: Survey.name, default: [] })
   surveyIds?: Types.ObjectId[];
 
   @Prop({ required: true })

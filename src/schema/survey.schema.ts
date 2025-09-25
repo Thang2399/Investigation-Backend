@@ -1,7 +1,5 @@
 import { HydratedDocument } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Question, QuestionSchema } from './question.schema';
-import { Answer, AnswerSchema } from './answer.schema';
 
 export type SurveyDocument = HydratedDocument<Survey>;
 
@@ -13,14 +11,20 @@ export class Survey {
   @Prop({ required: true, min: 1, max: 15 })
   numberOfQuestions: number;
 
-  @Prop()
-  isLimitedSurvey?: boolean = false;
+  @Prop({ type: Boolean, default: false })
+  isLimitedSurvey?: boolean;
 
-  @Prop({ required: true, type: [QuestionSchema] })
-  questions: Question[];
+  @Prop({ required: true, type: [String], default: [] })
+  questions: string[];
 
-  @Prop({ required: true, type: [AnswerSchema] })
-  answers: Answer[];
+  @Prop({
+    required: function (this: SurveyDocument) {
+      // `this` is the document being validated
+      return !!this.isLimitedSurvey;
+    },
+    type: Date,
+  })
+  expiredAt?: Date;
 }
 
 export const SurveySchema = SchemaFactory.createForClass(Survey);
