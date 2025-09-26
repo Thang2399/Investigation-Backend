@@ -6,6 +6,11 @@ import {
   ResponseSession,
   ResponseSessionSchema,
 } from '../../schema/response-session.schema';
+import { ResponseSessionService } from './service/response-session.service';
+import { ResponseSessionController } from './controller/response-session.controller';
+import { Question, QuestionSchema } from '../../schema/question.schema';
+import { SurveyService } from '../survey/service/survey.service';
+import { QuestionService } from '../question/service/question.service';
 
 @Module({
   imports: [
@@ -14,6 +19,7 @@ import {
         name: Survey.name,
         schema: SurveySchema,
       },
+      { name: Question.name, schema: QuestionSchema },
       {
         name: User.name,
         schema: UserSchema,
@@ -24,5 +30,7 @@ import {
       },
     ]),
   ],
+  providers: [ResponseSessionService, SurveyService, QuestionService],
+  controllers: [ResponseSessionController],
 })
 export class ResponseSessionModule {}
