@@ -10,6 +10,7 @@ import {
 import { SurveyController } from './controller/survey.controller';
 import { SurveyService } from './service/survey.service';
 import { QuestionService } from '../question/service/question.service';
+import { ResponseSessionModule } from '../response-session/response-session.module';
 
 @Module({
   imports: [
@@ -31,6 +32,8 @@ import { QuestionService } from '../question/service/question.service';
         schema: ResponseSessionSchema,
       },
     ]),
+    ResponseSessionModule,
+    SurveyModule
   ],
   providers: [SurveyService, QuestionService],
   controllers: [SurveyController],
