@@ -11,6 +11,7 @@ import { SurveyController } from './controller/survey.controller';
 import { SurveyService } from './service/survey.service';
 import { QuestionService } from '../question/service/question.service';
 import { ResponseSessionModule } from '../response-session/response-session.module';
+import { PaginationService } from '../pagination/service/pagination.service';
 
 @Module({
   imports: [
@@ -35,7 +36,7 @@ import { ResponseSessionModule } from '../response-session/response-session.modu
     ResponseSessionModule,
     SurveyModule
   ],
-  providers: [SurveyService, QuestionService],
+  providers: [SurveyService, QuestionService, PaginationService],
   controllers: [SurveyController],
 })
 export class SurveyModule {}

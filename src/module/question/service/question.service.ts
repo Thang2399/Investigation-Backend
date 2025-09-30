@@ -11,13 +11,44 @@ import { CreateQuestionDto } from '../dto/create-question.dto';
 import { Response } from 'express';
 import { DeleteQuestionsDto } from '../dto/delete-questions.dto';
 import { UpdateQuestionDto } from '../dto/update-question.dto';
+import { GetListQuestionsDto } from '../dto/get-list-questions.dto';
+import { PaginationService } from '../../pagination/service/pagination.service';
+import {
+  convertTextToRegex,
+  getQueryOptions,
+  toObjectIdArray,
+} from '../../../utils';
 
 @Injectable()
 export class QuestionService {
   constructor(
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
     @InjectModel(Survey.name) private surveyModel: Model<SurveyDocument>,
+    private readonly paginationService: PaginationService,
   ) {}
+
+  async getListQuestions(query: GetListQuestionsDto, res: Response) {
+    const ids = toObjectIdArray(query.surveyIds); // query.surveyIds can be string or string[]
+
+    const rawObjData = {
+      // match ANY of provided ids (documents whose surveyIds contains at least one of the ids)
+      ...(ids.length ? { surveyIds: { $in: ids } } : {}),
+      questionTitle: convertTextToRegex(query.questionTitle),
+      layout: query.layout,
+      questionType: query.questionType,
+      placeholder: convertTextToRegex(query.placeholder),
+    };
+
+    const queryOptions: Record<string, any> = getQueryOptions(rawObjData);
+
+    const listQuestions = await this.paginationService.getPaginationData(
+      this.questionModel,
+      query,
+      queryOptions,
+    );
+    return res.json(listQuestions);
+  }
+
   async getDetailQuestion(id: string) {
     const specificQuestion = await this.questionModel.findById(id);
     if (!specificQuestion) {
