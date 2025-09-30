@@ -30,7 +30,7 @@ export class ResponseSessionService {
 
     const obj = {
       ...dto,
-      isAnonymousUser: dto.userId !== null,
+      isAnonymousUser: dto.userId === null,
       responseStatus: Response_Enum.New,
       progressPercentage: 0,
     };

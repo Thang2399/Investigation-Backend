@@ -7,6 +7,7 @@ import { AnswerModule } from './module/answer/answer.module';
 import { ResponseSessionModule } from './module/response-session/response-session.module';
 import { UserModule } from './module/user/user.module';
 import { SurveyModule } from './module/survey/survey.module';
+import { SessionAnswerModule } from './module/session-answer/session-answer.module';
 
 const modules = [
   ApiConfigModule,
@@ -17,6 +18,7 @@ const modules = [
   ResponseSessionModule,
   UserModule,
   SurveyModule,
+  SessionAnswerModule
 ];
 
 @Module({
