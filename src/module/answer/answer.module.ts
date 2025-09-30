@@ -8,6 +8,8 @@ import {
   ResponseSessionSchema,
 } from '../../schema/response-session.schema';
 import { Answer, AnswerSchema } from '../../schema/answer.schema';
+import { AnswerController } from './controller/answer.controller';
+import { AnswerService } from './service/answer.service';
 
 @Module({
   imports: [
@@ -34,5 +36,7 @@ import { Answer, AnswerSchema } from '../../schema/answer.schema';
       },
     ]),
   ],
+  controllers: [AnswerController],
+  providers: [AnswerService],
 })
 export class AnswerModule {}

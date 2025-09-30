@@ -4,37 +4,43 @@ import { Question } from './question.schema';
 import { User } from './user.schema';
 import { Survey } from './survey.schema';
 import { ResponseSession } from './response-session.schema';
+import { SessionAnswer } from './session-answer.schema';
 
 export type AnswerDocument = HydratedDocument<Answer>;
 
 @Schema({ timestamps: true })
 export class Answer {
-  // @Prop({
-  //   type: MongooseSchema.Types.ObjectId,
-  //   ref: 'Survey',
-  //   required: true,
-  //   index: true,
-  // })
-  // surveyId: Types.ObjectId;
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: Survey.name,
+    required: true,
+  })
+  surveyId: Types.ObjectId;
 
-  // @Prop({
-  //   type: MongooseSchema.Types.ObjectId,
-  //   ref: 'Question',
-  //   required: true,
-  //   index: true,
-  // })
-  // questionId: Types.ObjectId;
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: Question.name,
+    required: true,
+  })
+  questionId: Types.ObjectId;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: User.name })
   userId?: Types.ObjectId;
 
-  // @Prop({
-  //   type: MongooseSchema.Types.ObjectId,
-  //   ref: ResponseSession.name,
-  //   required: true,
-  //   index: true,
-  // })
-  // responseSessionId: Types.ObjectId;
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: ResponseSession.name,
+    required: true,
+    index: true,
+  })
+  responseSessionId: Types.ObjectId;
+
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: SessionAnswer.name,
+    required: true,
+  })
+  sessionAnswerId: Types.ObjectId;
 
   @Prop({ required: true })
   valueString: string;
