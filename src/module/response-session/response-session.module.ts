@@ -11,6 +11,7 @@ import { ResponseSessionController } from './controller/response-session.control
 import { Question, QuestionSchema } from '../../schema/question.schema';
 import { SurveyService } from '../survey/service/survey.service';
 import { QuestionService } from '../question/service/question.service';
+import { PaginationService } from '../pagination/service/pagination.service';
 
 @Module({
   imports: [
@@ -30,7 +31,12 @@ import { QuestionService } from '../question/service/question.service';
       },
     ]),
   ],
-  providers: [ResponseSessionService, SurveyService, QuestionService],
+  providers: [
+    ResponseSessionService,
+    SurveyService,
+    QuestionService,
+    PaginationService,
+  ],
   controllers: [ResponseSessionController],
 })
 export class ResponseSessionModule {}
