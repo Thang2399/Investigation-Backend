@@ -12,6 +12,7 @@ import { SurveyService } from './service/survey.service';
 import { QuestionService } from '../question/service/question.service';
 import { ResponseSessionModule } from '../response-session/response-session.module';
 import { PaginationService } from '../pagination/service/pagination.service';
+import { Answer, AnswerSchema } from '../../schema/answer.schema';
 
 @Module({
   imports: [
@@ -31,6 +32,10 @@ import { PaginationService } from '../pagination/service/pagination.service';
       {
         name: ResponseSession.name,
         schema: ResponseSessionSchema,
+      },
+      {
+        name: Answer.name,
+        schema: AnswerSchema,
       },
     ]),
     ResponseSessionModule,

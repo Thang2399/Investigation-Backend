@@ -36,8 +36,8 @@ export class QuestionController {
   @ApiOperation({ description: 'Get detail of a question' })
   @ApiParam({ name: 'id', description: 'Question ID', type: String })
   @Get('/:id')
-  async getDetailQuestion(@Param('id') id: string) {
-    return this.questionService.getDetailQuestion(id);
+  async getDetailQuestion(@Param('id') id: string, @Res() res: Response) {
+    return this.questionService.getDetailQuestion(id, res);
   }
 
   @ApiOperation({ description: 'Create new question' })
