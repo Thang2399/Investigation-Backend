@@ -10,6 +10,7 @@ import {
 import { Answer, AnswerSchema } from '../../schema/answer.schema';
 import { AnswerController } from './controller/answer.controller';
 import { AnswerService } from './service/answer.service';
+import { PaginationService } from '../pagination/service/pagination.service';
 
 @Module({
   imports: [
@@ -37,6 +38,6 @@ import { AnswerService } from './service/answer.service';
     ]),
   ],
   controllers: [AnswerController],
-  providers: [AnswerService],
+  providers: [AnswerService, PaginationService],
 })
 export class AnswerModule {}

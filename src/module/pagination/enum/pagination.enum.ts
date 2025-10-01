@@ -3,6 +3,11 @@ export enum PaginationOrderByValuesEnum {
   DESC = 'desc',
 }
 
+export enum BooleanValuesEnum {
+  True = 'true',
+  False = 'false',
+}
+
 export enum PaginationDefaultEnum {
   Current_Page = 1,
   Page_Size = 15,

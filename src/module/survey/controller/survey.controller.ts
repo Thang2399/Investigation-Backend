@@ -9,6 +9,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Res,
 } from '@nestjs/common';
 import { SurveyService } from '../service/survey.service';
@@ -16,11 +17,21 @@ import { CreateSurveyDto } from '../dto/create-survey.dto';
 import { Response } from 'express';
 import { DeleteSurveysDto } from '../dto/delete-surveys.dto';
 import { UpdateSurveyDto } from '../dto/update-survey.dto';
+import { GetListSurveysDto } from '../dto/get-list-surveys.dto';
 
 @ApiTags('Survey API')
 @Controller('survey')
 export class SurveyController {
   constructor(private readonly surveyService: SurveyService) {}
+
+  @ApiOperation({ description: 'Get list surveys' })
+  @Get()
+  async getListSurveys(
+    @Query() query: GetListSurveysDto,
+    @Res() res: Response,
+  ) {
+    return this.surveyService.getListSurveys(query, res);
+  }
 
   @ApiOperation({ description: 'Create survey' })
   @ApiBody({ type: CreateSurveyDto })
@@ -47,7 +58,7 @@ export class SurveyController {
     @Body() dto: UpdateSurveyDto,
     @Res() res: Response,
   ) {
-    return this.surveyService.updateSurvey(id, dto, res)
+    return this.surveyService.updateSurvey(id, dto, res);
   }
 
   @ApiOperation({ description: 'Delete survey' })

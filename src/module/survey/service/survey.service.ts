@@ -12,6 +12,14 @@ import { Question, QuestionDocument } from '../../../schema/question.schema';
 import { QuestionService } from '../../question/service/question.service';
 import { DeleteSurveysDto } from '../dto/delete-surveys.dto';
 import { UpdateSurveyDto } from '../dto/update-survey.dto';
+import { GetListSurveysDto } from '../dto/get-list-surveys.dto';
+import {
+  convertTextToRegex,
+  getQueryOptions,
+  toObjectIdArray,
+} from '../../../utils';
+import { PaginationService } from '../../pagination/service/pagination.service';
+import { BooleanValuesEnum } from '../../pagination/enum/pagination.enum';
 
 @Injectable()
 export class SurveyService {
@@ -19,7 +27,29 @@ export class SurveyService {
     @InjectModel(Survey.name) private surveyModel: Model<SurveyDocument>,
     @InjectModel(Question.name) private questionModel: Model<QuestionDocument>,
     private questionService: QuestionService,
+    private paginationService: PaginationService,
   ) {}
+
+  async getListSurveys(query: GetListSurveysDto, res: Response) {
+    const questionsIds = toObjectIdArray(query.questions);
+
+    const rawObjData = {
+      ...(questionsIds.length ? { questions: { $in: questionsIds } } : {}),
+      surveyTitle: convertTextToRegex(query.surveyTitle),
+      numberOfQuestions: query.numberOfQuestions,
+      isLimitedSurvey: query.isLimitedSurvey === BooleanValuesEnum.True,
+    };
+
+    const queryOptions: Record<string, any> = getQueryOptions(rawObjData);
+
+    const listSurveys = await this.paginationService.getPaginationData(
+      this.surveyModel,
+      query,
+      queryOptions,
+    );
+
+    return res.json(listSurveys);
+  }
 
   async createNewSurvey(dto: CreateSurveyDto, res: Response) {
     const questions = dto.questions;

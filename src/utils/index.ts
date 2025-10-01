@@ -37,3 +37,17 @@ export const toObjectIdArray = (ids: string | string[]) => {
     .filter((id) => Types.ObjectId.isValid(id))
     .map((id) => new Types.ObjectId(id));
 };
+
+export const groupAnswersBySurvey = (answers: any[]) => {
+  const map = new Map<string, any[]>();
+  for (const a of answers) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const sid = String(a.surveyId);
+    if (!map.has(sid)) map.set(sid, []);
+    map.get(sid)!.push(a);
+  }
+  return Array.from(map.entries()).map(([surveyId, answers]) => ({
+    surveyId,
+    answers,
+  }));
+};
