@@ -17,6 +17,7 @@ import { LayoutTypeEnum } from '../../../enum/layout.enum';
 import { QuestionTypeEnum } from '../../../enum/question.enum';
 import { OptionDto } from './option.dto';
 import { ValidationRulesDto } from './validation-rules.dto';
+import { BooleanValuesEnum } from '../../pagination/enum/pagination.enum';
 
 export class CreateQuestionDto {
   @ApiProperty({
@@ -87,6 +88,14 @@ export class CreateQuestionDto {
   @Type(() => OptionDto)
   @Expose()
   options?: OptionDto[];
+
+  @ApiProperty({
+    enum: BooleanValuesEnum,
+    required: false,
+    default: BooleanValuesEnum.True
+  })
+  @IsEnum(BooleanValuesEnum)
+  isRowOptions?: BooleanValuesEnum;
 
   @ApiProperty({
     description: 'validation rules for the answer',

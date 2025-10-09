@@ -29,8 +29,11 @@ export class Question {
   @Prop({ required: true, enum: QuestionTypeEnum })
   questionType: QuestionTypeEnum;
 
-  @Prop({ required: true, min: 0, max: 10 })
+  @Prop({ required: true, min: 0, max: 5 })
   numberOfOptions?: number = 0;
+
+  @Prop({ required: false, default: true })
+  isRowOptions?: boolean;
 
   @Prop()
   placeholder?: string;
