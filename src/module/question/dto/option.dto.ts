@@ -9,8 +9,9 @@ export class OptionDto {
   @Expose()
   value: string;
 
-  @ApiProperty({ description: 'label of the option', type: Object })
-  @IsObject()
+  @ApiProperty({ description: 'label of the option', type: String })
+  @IsString()
+  @IsNotEmpty()
   @Expose()
-  label: Record<string, string>;
+  label: string;
 }
